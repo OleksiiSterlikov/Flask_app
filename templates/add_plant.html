@@ -39,21 +39,19 @@
 </nav>
 
 <div class="container">
-    <h1 class="text-center">Plants</h1>
-    <div class="plants-container">
-        {% for plant in plants %}
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{ plant["name"] }}</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ plant["location"] }}</h6>
-                    {#                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the#}
-                    {#                    card's content.</p>#}
-                    {#                <a href="#" class="card-link">Card link</a>#}
-                    {#                <a href="#" class="card-link">Another link</a>#}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+    <form action="/save-plant" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Zavod">
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Location:</label>
+            <input type="text" name="location" class="form-control" id="location" placeholder="Kyiv, Bandera str., 14">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Submit</button>
+        </div>
+    </form>
 </div>
 
 

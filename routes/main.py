@@ -1,15 +1,9 @@
 from app import app
 from flask import render_template
+from models.models import Plant
 
 
-@app.route("/")
-def hello():
-    return "Hello, World!"
-
-@app.route("/lol")
-def lol():
-    return "This is LOL page!"
-
-@app.route("/hello/<string:name>/<string:last_name>")
-def hello_user(name, last_name):
-    return  render_template("index.html", name=name, last_name=last_name)
+@app.route('/')
+def main():
+    plants = Plant.get_data()
+    return render_template('index.html', plants=plants)
