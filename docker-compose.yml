@@ -10,6 +10,8 @@ services:
       - "5000:5000"
     volumes:
       - .:/app
+    networks:
+      - app
   
   db:
     image: mysql:8.0
@@ -23,3 +25,9 @@ services:
       - 3311:3306
     volumes:
       - ./docker/mysql:/var/lib/mysql
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge

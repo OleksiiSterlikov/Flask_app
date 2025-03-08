@@ -1,8 +1,8 @@
-.plants-container {
+.clubs-container {
     display: flex;
     justify-content: space-between;
 }
 
-.plants-container .card {
+.clubs-container .card {
     width: 15%;
 }
