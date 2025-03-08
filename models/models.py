@@ -1,51 +1,11 @@
-"""Module for create objects"""
+"""Modul create objects in database"""
 
-from framework.models import Model
-
-
-class Plant(Model):
-    """Class creating Plants"""
-    file = 'plants.json'
-
-    def __init__(self, name, location):
-        self.name = name
-        self.location = location
+from app import db
 
 
-class Employee(Model):
-    """Class creating Employee"""
-    file = 'employee.json'
-
-    def __init__(self, name, object_id, type_of_work):
-        self.name = name
-        self.object_id = object_id
-        self.type_of_work = type_of_work
-
-    def get_work(self):
-        """Function return type of work employee"""       
-        if self.type_of_work == 'plant':
-            return Plant.get_by_id(self.object_id)
-        elif self.type_of_work == 'salon':
-            return Salon.get_by_id(self.object_id)
-        else:
-            return {}
-
-    @classmethod
-    def get_by_id(cls, id):
-        """Function printing information about object by id """
-        employee_dict = super().get_by_id(id)
-        employee = Employee(employee_dict['name'], employee_dict['object_id'], employee_dict['type_of_work'])
-        work_of_employee = employee.get_work()
-        cls.print_object([employee_dict])
-        print("Employee work: ")
-        cls.print_object([work_of_employee])
-
-
-class Salon(Model):
-    """Class creating Salon"""
-    file = 'salon.json'
-
-    def __init__(self, name, address, size):
-        self.name = name
-        self.address = address
-        self.size = size
+class Club(db.Model):
+    """Class creating object Club"""
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    location = db.Column(db.String(255), nullable=False)
+    
