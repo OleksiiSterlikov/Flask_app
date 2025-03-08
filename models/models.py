@@ -1,7 +1,10 @@
+"""Module for create objects"""
+
 from framework.models import Model
 
 
 class Plant(Model):
+    """Class creating Plants"""
     file = 'plants.json'
 
     def __init__(self, name, location):
@@ -10,6 +13,7 @@ class Plant(Model):
 
 
 class Employee(Model):
+    """Class creating Employee"""
     file = 'employee.json'
 
     def __init__(self, name, object_id, type_of_work):
@@ -18,6 +22,7 @@ class Employee(Model):
         self.type_of_work = type_of_work
 
     def get_work(self):
+        """Function return type of work employee"""       
         if self.type_of_work == 'plant':
             return Plant.get_by_id(self.object_id)
         elif self.type_of_work == 'salon':
@@ -27,6 +32,7 @@ class Employee(Model):
 
     @classmethod
     def get_by_id(cls, id):
+        """Function printing information about object by id """
         employee_dict = super().get_by_id(id)
         employee = Employee(employee_dict['name'], employee_dict['object_id'], employee_dict['type_of_work'])
         work_of_employee = employee.get_work()
@@ -36,6 +42,7 @@ class Employee(Model):
 
 
 class Salon(Model):
+    """Class creating Salon"""
     file = 'salon.json'
 
     def __init__(self, name, address, size):
