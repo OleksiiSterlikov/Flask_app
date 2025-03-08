@@ -72,3 +72,4 @@ class Model(ABC):
             new_el["id"] = 1
         data.append(new_el)
         self.save_to_file('database/' + self.file, data)
+        

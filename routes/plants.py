@@ -14,3 +14,8 @@ def save_plant():
     plant = Plant(name, location)
     plant.save()
     return redirect('/')
+
+@app.route("/delete-plant/<int:id>")
+def delete_plant(id):
+    Plant.delete(id)
+    return redirect("/")
