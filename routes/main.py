@@ -5,7 +5,6 @@ from app import app
 from models.models import Club
 
 
-
 @app.route('/')
 def main():
     """Main function"""
