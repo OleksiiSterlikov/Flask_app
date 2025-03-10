@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>FlaskWebApp</title>
+    <title>FC App</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/css/style.css">
@@ -14,39 +14,43 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Flask App</a>
+        <a class="navbar-brand" href="/">FC App</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/add-club">Add Club</a>
-                        </li>
-        {#                <li class="nav-item">#}
-        {#                    <a class="nav-link" href="#">Features</a>#}
-        {#                </li>#}
-        {#                <li class="nav-item">#}
-        {#                    <a class="nav-link" href="#">Pricing</a>#}
-        {#                </li>#}
-        {#                <li class="nav-item">#}
-        {#                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>#}
-        {#                </li>#}
-                    </ul>
-                </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/add-club">Add Club</a>
+                </li>
+                {#                <li class="nav-item">#}
+                {#                    <a class="nav-link" href="#">Features</a>#}
+                {#                </li>#}
+                {#                <li class="nav-item">#}
+                {#                    <a class="nav-link" href="#">Pricing</a>#}
+                {#                </li>#}
+                {#                <li class="nav-item">#}
+                {#                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>#}
+                {#                </li>#}
+            </ul>
+        </div>
     </div>
 </nav>
 
 <div class="container">
-    <form action="/save-club" method="post">
+    <form {% if club %} action="/update-club/{{ club.id }}" {% else %} action="/save-club" {% endif %} method="post">
         <div class="mb-3">
             <label for="title" class="form-label">Title:</label>
-            <input type="text" name="title" class="form-control" id="titlt" placeholder="Dynamo">
+            <input type="text" name="title" class="form-control"
+                   {% if club %} value="{{ club.title }}" {% endif %}
+                   id="title" placeholder="Dynamo">
         </div>
         <div class="mb-3">
             <label for="location" class="form-label">Location:</label>
-            <input type="text" name="location" class="form-control" id="location" placeholder="Kyiv">
+            <input type="text" name="location" class="form-control"
+                   {% if club %} value="{{ club.location }}" {% endif %}
+                   id="location" placeholder="Kyiv">
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Submit</button>

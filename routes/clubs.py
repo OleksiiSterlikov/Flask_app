@@ -27,3 +27,19 @@ def delete_club(id):
     db.session.delete(club)
     db.session.commit()
     return redirect("/")
+
+@app.route("/edit-club/<int:id>")
+def edit_club(id):
+    """Function edit Club's object at id"""
+    club = Club.query.get(id)
+    return render_template("add_club.html", club=club)
+
+@app.route("/update-club/<int:id>", methods=["POST"])
+def update_club(id):
+    """Function update Club's object at id"""
+    club = Club.query.get(id)
+    club.title = request.form["title"]
+    club.location = request.form["location"]
+    db.session.add(club)
+    db.session.commit()
+    return redirect("/")
