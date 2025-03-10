@@ -39,23 +39,20 @@
 </nav>
 
 <div class="container">
-    <form {% if club %} action="/update-club/{{ club.id }}" {% else %} action="/save-club" {% endif %} method="post">
-        <div class="mb-3">
-            <label for="title" class="form-label">Title:</label>
-            <input type="text" name="title" class="form-control"
-                    {% if club %} value="{{ club.title }}" {% endif %}
-                   id="title" placeholder="Dynamo">
-        </div>
-        <div class="mb-3">
-            <label for="location" class="form-label">Location:</label>
-            <input type="text" name="location" class="form-control"
-                    {% if club %} value="{{ club.location }}" {% endif %}
-                   id="location" placeholder="Kyiv">
-        </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-3">Submit</button>
-        </div>
-    </form>
+    <h1 class="text-center">Employees</h1>
+    <div class="clubs-container">
+        {% for employee in employees %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ employee.first_name }} {{ employee.last_name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ employee.email }}</h6>
+                    <p class="card-text">{{ employee.club.title }}</p>
+                    <a href="/delete-club/{{ employee.id }}" class="card-link">Delete</a>
+                    <a href="/edit-club/{{ employee.id }}" class="card-link">Edit</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 
