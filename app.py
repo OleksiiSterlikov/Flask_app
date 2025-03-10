@@ -10,8 +10,7 @@ db = SQLAlchemy(app)
 
 
 with app.app_context():
-    from routes.main import *
-    from routes.clubs import *
+    from routes import *
     from models.models import *
     # db.create_all()
 
