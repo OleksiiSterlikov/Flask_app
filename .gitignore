@@ -198,3 +198,8 @@ cython_debug/
 pyvenv.cfg
 .venv
 pip-selfcheck.json
+
+# MySQL files
+.mysql
+./docker/mysql
+./docker/mysql/*
