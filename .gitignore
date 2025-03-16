@@ -203,3 +203,5 @@ pip-selfcheck.json
 .mysql
 ./docker/mysql
 ./docker/mysql/*
+mysql
+mysql/*
