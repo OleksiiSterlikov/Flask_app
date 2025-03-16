@@ -10,3 +10,8 @@ def main():
     """Main function"""
     clubs = Club.query.order_by(Club.title.asc()).all()
     return render_template('index.html', clubs=clubs)
+
+
+@app.route('/sign-up')
+def sign_up():
+    return render_template('sign-up.html')

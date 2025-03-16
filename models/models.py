@@ -4,7 +4,7 @@ from app import db
 
 
 class Club(db.Model):
-    """Class creating object Club"""
+    """Class creating table db  Club"""
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     location = db.Column(db.String(255), nullable=False)
@@ -12,10 +12,21 @@ class Club(db.Model):
 
 
 class Employee(db.Model):
-    """Class creating object Employee"""
+    """Class creating table db  Employee"""
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))
     email = db.Column(db.String(255), unique=True, nullable=False)
     club_id = db.Column(db.Integer, db.ForeignKey('club.id'), nullable=False)
     club = db.relationship("Club", back_populates="employees")
+
+
+class User(db.Model):
+    """Class creating table db User"""
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    first_name = db.Column(db.String(255), nullable=False)
+    last_name = db.Column(db.String(255), nullable=False)
