@@ -23,7 +23,11 @@
                 </ul>
             </div>
             <div>
-                <a class="btn btn-primary" href="/sign-up" role="button">Sign Up</a>
+                {% if user %}
+                    {{ user.first_name }} {{ user.last_name}}
+                {% else %}
+                    <a class="btn btn-primary" href="/sign-up" role="button">Sign Up</a>
+                {% endif %}
             </div>
     </div>
 </nav>

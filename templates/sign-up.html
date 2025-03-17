@@ -9,24 +9,24 @@
 <section class="wrapper">
     <div class="form signup">
       <header>Sign Up</header>
-      <form action="#">
+      <form action="/sign-up" method="post">
         <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First name" required />
         <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last name" required />
         <input type="email" class="form-control" name="email" id="email" placeholder="Email address" required />
-        <input type="text" class="form-control" name="user_name" id="user_name" placeholder="Username" required />
-        <input type="password" placeholder="Password" required />
+        <input type="text" class="form-control" name="username" id="username" placeholder="Username" required />
+        <input type="password" name="password" id="password" placeholder="Password" required />
         <div class="checkbox">
           <input type="checkbox" id="signupCheck" />
           <label for="signupCheck">I accept all terms & conditions</label>
         </div>
-        <input type="submit" value="Signup" />
+        <input type="submit" value="Create Account" />
       </form>
     </div>
     <div class="form login">
       <header>Sign In</header>
       <form action="#">
         <input type="text" placeholder="Email address" required />
-        <input type="password" placeholder="Password" required />
+        <input type="password" name="password" id="password" placeholder="Password" required />
         <a href="#">Forgot password?</a>
         <input type="submit" value="Login" />
       </form>
