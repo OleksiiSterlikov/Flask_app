@@ -22,11 +22,13 @@
         {#                </li>#}
                 </ul>
             </div>
-            <div>
+            <div class="login-info">
                 {% if user %}
-                    {{ user.first_name }} {{ user.last_name}}
+                    <span class="user">{{ user.first_name }} {{ user.last_name}}</span>
+                    <a class="btn btn-primary" href="/logout" role="button">Logout</a>
                 {% else %}
                     <a class="btn btn-primary" href="/sign-up" role="button">Sign Up</a>
+                    <a class="btn btn-primary" href="/sign-in" role="button">Sign In</a>
                 {% endif %}
             </div>
     </div>

@@ -3,6 +3,7 @@
 from flask import render_template, request, session, redirect
 from app import app, db
 from models.models import Club, User
+from sqlalchemy import or_
 
 
 @app.route('/')
@@ -17,19 +18,40 @@ def main():
 
 @app.route('/sign-up', methods=['POST', 'GET'])
 def sign_up():
-    """Sign in function"""
+    """Sign up function"""
     if request.method == 'POST':
         data = request.form
         user = User(
-            username=data.get('username'), 
-            first_name=data.get('first_name'), 
+            username=data.get('username'),
+            first_name=data.get('first_name'),
             last_name=data.get('last_name'),
             email=data.get('email'),
             password=data.get('password')
-            )
+        )
         db.session.add(user)
         db.session.commit()
         session['user'] = user.id
         return redirect('/')
     else:
         return render_template('sign-up.html')
+
+
+@app.route('/sign-in', methods=['POST', 'GET'])
+def sign_in():
+    """Sign in function"""
+    if request.method == 'POST':
+        user = User.query.filter(
+            or_(User.email == request.form.get('email'), User.username == request.form.get('email'))).first()
+        if user is not None:
+            if user.password == request.form.get('password'):
+                session['user'] = user.id
+        return redirect('/')
+    else:
+        return render_template('sign-in.html')
+
+
+@app.route('/logout')
+def logout():
+    """Logout function"""
+    session.clear()
+    return redirect('/')

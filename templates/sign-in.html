@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block aditional_style %}
+<link rel="stylesheet" href="/static/css/sign-up.css">
+{% endblock %}
+
+{% block content %}
+<div class="sign-up-form">
+<section class="wrapper">
+    <div class="form signup">
+      <header>Sign In</header>
+      <form action="/sign-in" method="post">
+        <input type="text" class="form-control" name="email" id="email" placeholder="Email address or login" required />
+        <input type="password" name="password" id="password" placeholder="Password" required />
+        <input type="submit" value="Login" />
+        <a id="sign-tag-a" href="/sign-up">Sign Up</a>
+      </form>
+    </div>
+    <script>
+      const wrapper = document.querySelector(".wrapper"),
+        signupHeader = document.querySelector(".signup header"),
+        loginHeader = document.querySelector(".login header");
+      loginHeader.addEventListener("click", () => {
+        wrapper.classList.add("active");
+      });
+      signupHeader.addEventListener("click", () => {
+        wrapper.classList.remove("active");
+      });
+    </script>
+  </section>
+</div>
+
+{% endblock %}

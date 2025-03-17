@@ -12,3 +12,7 @@
     display: flex;
     justify-content: space-between;
 }
+
+.user {
+    margin-right: 15px;
+}
