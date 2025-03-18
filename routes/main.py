@@ -4,6 +4,7 @@ from flask import render_template, request, session, redirect
 from app import app, db
 from models.models import Club, User
 from sqlalchemy import or_
+import hashlib
 
 
 @app.route('/')
@@ -26,7 +27,7 @@ def sign_up():
             first_name=data.get('first_name'),
             last_name=data.get('last_name'),
             email=data.get('email'),
-            password=data.get('password')
+            password=hashlib.md5(data.get('password').encode('utf-8')).hexdigest()
         )
         db.session.add(user)
         db.session.commit()
@@ -43,7 +44,7 @@ def sign_in():
         user = User.query.filter(
             or_(User.email == request.form.get('email'), User.username == request.form.get('email'))).first()
         if user is not None:
-            if user.password == request.form.get('password'):
+            if user.password == hashlib.md5(request.form.get('password').encode('utf-8')).hexdigest():
                 session['user'] = user.id
         return redirect('/')
     else:
