@@ -12,13 +12,28 @@ class Club(db.Model):
 
 
 class Employee(db.Model):
-    """Class creating table db  Employee"""
+    """Class creating table db Employee"""
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))
     email = db.Column(db.String(255), unique=True, nullable=False)
     club_id = db.Column(db.Integer, db.ForeignKey('club.id'), nullable=False)
     club = db.relationship("Club", back_populates="employees")
+
+    def serialize(self):
+        """Function to serialize object Employee from API"""
+        return {
+            "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+            "club_id": self.club_id,
+            "club": {
+                "id": self.club_id,
+                "title": self.club.title,
+                "location": self.club.location,
+            },
+        }
 
 
 class User(db.Model):
