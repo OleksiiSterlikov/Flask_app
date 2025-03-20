@@ -4,7 +4,7 @@ from flask import request
 from models.models import Employee as EmployeeModel
 
 
-class Employees(Resource):
+class EmployeesResource(Resource):
     """Class creating API from Employee"""
     def get(self):
         """Function getting employee details from API"""
@@ -35,4 +35,24 @@ class Employees(Resource):
         return employee.serialize()
 
 
-api.add_resource(Employees, '/api/v1/employees')
+class SingleEmployeeResource(Resource):
+    """Class creating API from single Employee"""
+    def get(self, employee_id):
+        """Function getting single employee details from API"""
+        employee = EmployeeModel.query.get(employee_id)
+        return employee.serialize()
+
+    def put(self, employee_id):
+        """Function updating single employee details from API"""
+        data = request.json
+        employee = EmployeeModel.query.get(employee_id)
+        employee.first_name = data.get("first_name", employee.first_name)
+        employee.last_name = data.get("last_name", employee.last_name)
+        employee.email = data.get("email", employee.email)
+        employee.club_id = data.get("club_id", employee.club_id)
+        db.session.add(employee)
+        db.session.commit()
+        return employee.serialize()
+
+api.add_resource(EmployeesResource, '/api/v1/employees')
+api.add_resource(SingleEmployeeResource, '/api/v1/employees/<employee_id>')
