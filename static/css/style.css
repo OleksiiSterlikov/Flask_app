@@ -1,9 +1,0 @@
-.clubs-container {
-    display: flex;
-    justify-content: flex-start;
-}
-
-.clubs-container .card {
-    width: 15%;
-    margin-left: 20px;
-}
