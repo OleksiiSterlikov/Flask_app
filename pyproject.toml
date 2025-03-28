@@ -1,0 +1,32 @@
+[project]
+name = "Flask_app"
+version = "0.1.0"
+description = "Flask application"
+authors = [
+    {name = "Oleksii Sterlikov",email = "Oleksii.Sterlikov@gmail.com"}
+]
+readme = "README.md"
+requires-python = "3.12.1"
+packages = [{include = "Flask_app"}]
+dependencies = [
+    "flask (>=3.1.0,<4.0.0)",
+    "flask-migrate (>=4.1.0,<5.0.0)",
+    "flask-sqlalchemy (>=3.1.1,<4.0.0)",
+    "flask-login (>=0.6.3,<0.7.0)",
+    "psycopg2 (>=2.9.10,<3.0.0)",
+    "jinja2 (>=3.1.6,<4.0.0)",
+    "sqlalchemy (>=2.0.40,<3.0.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)",
+    "email-validator (>=2.2.0,<3.0.0)"
+]
+
+[tool.poetry]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+black = "^25.1.0"
+flake8 = "^7.1.2"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
