@@ -1,34 +1,36 @@
 version: '3'
 
 services:
+
+  db:
+    image: postgres:12
+    container_name: flask-db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${PG_USER:-postgres}
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-secret}
+      POSTGRES_DB: ${PG_DB:-postgres}
+      PGUSER: ${PG_USER:-postgres}
+      PGPASSWORD: ${PG_PASSWORD:-secret}
+      PGDATABASE: ${PG_DB:-postgres}
+    ports:
+      - 127.0.0.1:${LOCAL_PG_PORT:-5432}:542
+
   web:
     build: 
-      dockerfile: ./docker/python/Dockerfile
+      dockerfile: docker/Dockerfile
       context: .
-    container_name: "flask-web"
+    command: bash ./docker_entrypoint.sh
+    container_name: flask-web
     ports:
-      - "5000:5000"
+      - 127.0.0.1:${LOCAL_WEB_PORT:-5000}:5000
     volumes:
       - .:/app
-    env_file: ".env"
-    networks:
-      - app
-  
-  db:
-    image: mysql:8.0
-    container_name: "flask-db"
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "flask"
-      MYSQL_USERNAME: "flask"
-      MYSQL_PASSWORD: "flask"
-    ports:
-      - 3311:3306
-    volumes:
-      - ./docker/mysql:/var/lib/mysql
-    networks:
-      - app
+      - FLASK_ENV=production
+    depends_on:
+      - db
 
-networks:
-  app:
-    driver: bridge
+volumes:
+  db_data:
