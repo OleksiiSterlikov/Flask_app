@@ -10,7 +10,7 @@ auth_blueprint = Blueprint('auth', __name__)
 def login():
     form = LoginForm(request.form)
     if form.validate_on_submit():
-        user = User.authenticate(form.user_id.data, form.password.data)
+        user = User.authenticate(form.user_identifier.data, form.password.data)
         if user:
             login_user(user)
             flash('Login successful.', 'success')
@@ -26,13 +26,13 @@ def logout():
 
 @auth_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm(request.data)
+    form = RegistrationForm(request.form)
     if form.validate_on_submit():
         user = User(
             first_name=form.first_name.data,
             last_name=form.last_name.data,
-            username=form.username.data,
             email=form.email.data,
+            username=form.username.data,
             password=form.password.data,
         )
         user.save()

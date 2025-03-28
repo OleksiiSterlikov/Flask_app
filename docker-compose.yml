@@ -15,7 +15,7 @@ services:
       PGPASSWORD: ${PG_PASSWORD:-secret}
       PGDATABASE: ${PG_DB:-postgres}
     ports:
-      - 127.0.0.1:${LOCAL_PG_PORT:-5432}:542
+      - 127.0.0.1:${LOCAL_PG_PORT:-5432}:5432
 
   web:
     build: 
