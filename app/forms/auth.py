@@ -20,3 +20,10 @@ class RegistrationForm(FlaskForm):
     password_confirmation = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password',
                                                                                                   message='Passwords must match.')])
     submit = SubmitField('Register')
+
+class ProfileForm(FlaskForm):
+    first_name = StringField("First name")
+    last_name = StringField("Last name")
+    username = StringField("Username", [DataRequired(), Length(4, 255)])
+    email = StringField("Email Address", [DataRequired(), Email()])
+    submit = SubmitField("Save")

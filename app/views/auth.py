@@ -1,8 +1,13 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, current_user
 
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
+from app.forms import (
+    LoginForm,
+    RegistrationForm,
+    ProfileForm,
+)
 
 auth_blueprint = Blueprint('auth', __name__)
 
@@ -42,3 +47,25 @@ def register():
     elif form.is_submitted():
         flash('Registration failed.', 'danger')
     return render_template('auth/register.html', form=form)
+
+@auth_blueprint.route("/profile", methods=["GET", "POST"])
+def profile():
+    user: User = User.query.get(current_user.id)
+    form = ProfileForm()
+    if form.validate_on_submit():
+        user.first_name = (form.first_name.data,)
+        user.last_name = (form.last_name.data,)
+        user.username = (form.username.data,)
+        user.email = (form.email.data,)
+        user.save()
+
+        flash("Profile has been successfully updated", "info")
+        return redirect(url_for("main.index"))
+    elif form.is_submitted():
+        flash("The given data was invalid.", "danger")
+    elif request.method == "GET":
+        form.first_name.data = user.first_name
+        form.last_name.data = user.last_name
+        form.username.data = user.username
+        form.email.data = user.email
+    return render_template("auth/profile.html", form=form)
