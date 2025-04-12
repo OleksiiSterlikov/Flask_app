@@ -12,7 +12,7 @@ migration = Migrate()
 def create_app(environment='development'):
     """Create and configure an instance of the Flask application."""
     from config import config
-    from app.views import auth_blueprint, main_blueprint
+    from app.views import auth_blueprint, main_blueprint, upload_blueprint, recipient_blueprint
     from app.models import User, AnonymousUser
 
     # Instance app
@@ -30,6 +30,8 @@ def create_app(environment='development'):
     # Register blueprints
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(main_blueprint)
+    app.register_blueprint(upload_blueprint)
+    app.register_blueprint(recipient_blueprint)
 
     @login_manager.user_loader
     def get_user(id):
