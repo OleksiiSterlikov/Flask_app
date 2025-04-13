@@ -7,10 +7,12 @@
                 <h4 class="card-title">Upload Recipient</h4>
             </div>
             <div class="card-body">
-                <form class="form" role="form" enctype="multipart/form-data" action="{{ url_for('upload.file_csv') }}" method="post">
+                <form class="form" role="form" enctype="multipart/form-data" action="{{ url_for('upload.file_csv') }}"
+                      method="post">
+                    {{ form.hidden_tag() }}
                     <div class="form-group">
                         {{ form.file.label }}
-                        {{ form.file(class='form-control', accept='.csv') }}
+                        {{ form.file(class="form-control", accept=".csv") }}
                         {% for error in form.errors.file %}
                             <small class="text-danger">{{ error }}</small>
                         {% endfor %}
