@@ -9,16 +9,16 @@ from app import db
 
 
 class RecipientRow(BaseModel):
-    email: Optional[str]
     first_name: Optional[str]
     last_name: Optional[str]
     phone: Optional[str]
     address: Optional[str]
+    email: Optional[str]
     birthday: Optional[date]
 
     @validator("birthday", pre=True)
     def parse_birthday(cls, v: str) -> date:
-        return datetime.strptime(v, '%d/%m/%Y').date() if v else None
+        return datetime.strptime(v, '%d.%m.%Y').date() if v else None
 
     class Config:
         orm_mode = True
