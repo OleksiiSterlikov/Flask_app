@@ -1,1 +1,2 @@
-from .users import User, UserMixin, AnonymousUser
+from .users import User, AnonymousUser
+from .recipient import Recipient
