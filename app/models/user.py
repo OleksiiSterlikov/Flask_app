@@ -4,7 +4,7 @@ from sqlalchemy import func
 from flask_login import UserMixin, AnonymousUserMixin
 from app import db
 from app.models.utils import ModelMixin
-
+from app.utils import generate_password_reset_id
 
 
 class User(db.Model, ModelMixin, UserMixin):
@@ -17,6 +17,7 @@ class User(db.Model, ModelMixin, UserMixin):
     username = db.Column(db.String(255), nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
     active = db.Column(db.Boolean, nullable=False, default=True)
+    reset_password_uuid = db.Column(db.String(64), default=generate_password_reset_id)
 
     @hybrid_property
     def password(self):
@@ -32,6 +33,12 @@ class User(db.Model, ModelMixin, UserMixin):
                                        func.lower(cls.email) == func.lower(user_id))).first()
         if user and check_password_hash(user.password, password):
             return user
+
+    def reset_password(self):
+        reset_uuid = generate_password_reset_id()
+        self.password = reset_uuid
+        self.reset_password_uuid = reset_uuid
+        self.save()
 
 
 class AnonymousUser(AnonymousUserMixin):
