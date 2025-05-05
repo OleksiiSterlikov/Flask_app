@@ -21,6 +21,15 @@ class RegistrationForm(FlaskForm):
                                                                                                   message='Passwords must match.')])
     submit = SubmitField('Register')
 
+    def validate_username(form, field):
+        if User.query.filter_by(username=field.data).first():
+            raise ValidationError('Username already in use.')
+
+    def validate_email(form, field):
+        if User.query.filter_by(email=field.data).first():
+            raise ValidationError('Email already in use.')
+
+
 class ProfileForm(FlaskForm):
     first_name = StringField("First name")
     last_name = StringField("Last name")
@@ -28,18 +37,18 @@ class ProfileForm(FlaskForm):
     email = StringField("Email Address", [DataRequired(), Email()])
     submit = SubmitField("Save")
 
-# class ForgotPasswordForm(FlaskForm):
-#     email = StringField("Email Address", [DataRequired(), Email()])
-#     submit = SubmitField("Reset password")
-#
-#     def validate_email(form, field):
-#         if not User.query.filter_by(email=field.data).first():
-#             raise ValidationError("Not found registered user with this email.")
-#
-#
-# class PasswordResetForm(FlaskForm):
-#     password = PasswordField("Password", [DataRequired(), Length(6, 30)])
-#     password_confirmation = PasswordField(
-#         "Confirm Password", [DataRequired(), EqualTo("password")]
-#     )
-#     submit = SubmitField("Save")
+class ForgotPasswordForm(FlaskForm):
+    email = StringField("Email Address", [DataRequired(), Email()])
+    submit = SubmitField("Reset password")
+
+    def validate_email(form, field):
+        if not User.query.filter_by(email=field.data).first():
+            raise ValidationError("Not found registered user with this email.")
+
+
+class PasswordResetForm(FlaskForm):
+    password = PasswordField("Password", [DataRequired(), Length(6, 30)])
+    password_confirmation = PasswordField(
+        "Confirm Password", [DataRequired(), EqualTo("password")]
+    )
+    submit = SubmitField("Save")
