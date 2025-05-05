@@ -37,6 +37,7 @@ def logout():
 @auth_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
+    print(form.validate_on_submit())
     if form.validate_on_submit():
         user = User(
             first_name=form.first_name.data,
@@ -80,15 +81,12 @@ def profile():
 @auth_blueprint.route("/reset-password", methods=["GET", "POST"])
 def reset_password():
     form = ForgotPasswordForm()
-    print(form.validate_on_submit())
-    if form.validate_on_submit():
+    if form.validate():
         user: User = User.query.filter(func.lower(User.email) == func.lower(form.email.data)).first()
         if user:
             user.reset_password()
-            print('*********' * 4)
             print(url_for('auth.password_reset', reset_password_uuid=user.reset_password_uuid, _external=True, ))
             flash('Passwort reset successful!', 'success')
-            print('*********' * 4)
             return redirect(url_for('main.index'))
         flash('User not found!', 'danger')
     elif form.is_submitted():
@@ -112,4 +110,4 @@ def password_reset(reset_password_uuid: str):
         return redirect(url_for('main.index'))
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
-    return render_template("auth/password_reset.html", form=form, reset_password_uuid=reset_password_uuid)
+    return render_template("auth/password_reset.html", form=form, reset_password_uuid=reset_password_uuid,)
